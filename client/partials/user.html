@@ -1,0 +1,18 @@
+<div ng-controller="userControl as uc">
+	<h1>Bucket List</h1>
+	<h5><a href="#/dashboard">Dashboard</a></h5>
+	<h5><button ng-click="uc.logout()">Logout</button></h5>
+	<h2>{{uc.currentUser.name}}'s Bucket List</h2>
+	<h4>Done</h4>
+	<ul>
+		<li ng-repeat="task in uc.userTasks" ng-if="task.checked == true">
+			{{task.user}} {{task.title}} - {{task.description}} - {{task.created_at}}
+		</li>
+	</ul>
+	<h4>Pending</h4>
+	<ul>
+		<li ng-repeat="task in uc.userTasks" ng-if="task.checked == false">
+			{{task.user}} {{task.title}} - {{task.description}} - {{task.created_at}}
+		</li>
+	</ul>
+</div>

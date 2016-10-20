@@ -1,0 +1,26 @@
+<div ng-controller="dashControl as dc">
+	<h1>Bucket List</h1>
+	<h5><a href="#/dashboard">Dashboard</a></h5>
+	<h5><button ng-click="dc.logout()">Logout</button></h5>
+	<h2>Welcome, {{dc.currentUser.name}}!</h2>
+	<form ng-submit="dc.createTask()">
+		Title: <input type="text" ng-model="dc.newTask.title">
+		Description: <input type="text" ng-model="dc.newTask.description">
+		<select ng-model="dc.newTask.shared_user">
+			<option ng-repeat="user in dc.users" ng-if="user.name != dc.currentUser.name" value="{{user._id}}">{{user.name}}</option>
+		</select>
+		<input type="submit" value="Add to List">
+	</form>
+	{{dc.errors}}
+	<h3>Before I die I want to...</h3>
+	<ul>
+		<li ng-repeat="task in dc.userTasks">
+			<input type="checkbox" ng-checked="{{task.checked}}" ng-model="dc.checked.status" ng-change="dc.check(task._id)">
+			{{task.user}} {{task.title}} - {{task.description}} - {{task.created_at}}
+		</li>
+	</ul>
+	<h3>List of other users (Click to view profile):</h3>
+	<ul>
+		<li ng-repeat="user in dc.users" ng-if="user.name != dc.currentUser.name"><a href="#/user/{{user._id}}">{{user.name}}</a></li>
+	</ul>
+</div>
