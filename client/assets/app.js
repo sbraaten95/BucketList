@@ -4,9 +4,6 @@ app.config(($routeProvider) => {
 	$routeProvider.when('/login', {
 		controller: 'loginControl',
 		templateUrl: 'partials/login.html'
-	}).when('/dashboard/:id', {
-		controller: 'dashControl',
-		templateUrl: 'partials/dashboard.html'
 	}).when('/dashboard', {
 		controller: 'dashControl',
 		templateUrl: 'partials/dashboard.html'

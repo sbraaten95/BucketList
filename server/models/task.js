@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var TaskSchmea = new mongoose.Schema({
+var TaskSchema = new mongoose.Schema({
 	user: String,
 	checked: Boolean,
 	title: {type: String, minlength: 5, required: true},
 	description: {type: String, minlength: 10, required: true},
-	shared_user: {type: Schema.Types.ObjectId, ref: 'User'}
+	shared_user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 }, {
 	timestamps: {
 		createdAt: 'created_at',
@@ -14,4 +13,4 @@ var TaskSchmea = new mongoose.Schema({
 	}
 });
 
-var Task = mongoose.model('Task', TaskSchmea);
+var Task = mongoose.model('Task', TaskSchema);

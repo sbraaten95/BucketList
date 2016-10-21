@@ -1,47 +1,45 @@
-app.controller('dashControl', ['$routeParams', '$location', '$cookies', 'userFactory', 'taskFactory', function ($routeParams, $location, $cookies, uF, tF){
+/*********************************************************
+*   Primary controller. Facilitates main functionality   *
+*********************************************************/
+
+app.controller('dashControl', ['$location', '$cookies', 'userFactory', 'taskFactory', function ($location, $cookies, uF, tF){
 	var _this = this;
 	this.currentUser = {};
 	this.users = [];
 	this.userTasks = [];
 	this.tasks = [];
 	this.errors = {};
-
-	this.getCurrentUser = function (id){
-		uF.getCurrentUser(id, function (data){
+	this.fetchSharedTasks=()=>{
+		for (var i in _this.tasks) {
+			if (_this.tasks[i].shared_user == _this.currentUser._id) {
+				_this.userTasks.push(_this.tasks[i]);
+			}
+		}
+	};
+	this.getCurrentUser=(id)=>{
+		uF.getCurrentUser(id, (data)=>{
 			_this.currentUser = data;
-			console.log(_this.currentUser)
 		});
 	};
-	this.getCurrentUser($cookies.get('user'))
-
-	this.getUsers = function (){
-		uF.getUsers(function (data){
+	this.getUsers=()=>{
+		uF.getUsers((data)=>{
 			_this.users = data;
 		});
 	};
-	this.getUsers();
-
-	this.getTasks = function (id){
+	this.getTasks=(id)=>{
 		this.userTasks = [];
-		tF.getUserTasks($cookies.get('user'), function (data){
+		tF.getUserTasks($cookies.get('user'), (data)=>{
 			_this.userTasks = data;
 			_this.getAllTasks();
 		});
-	}
-	this.getTasks($cookies.get('user'));
-
-	this.getAllTasks = function (){
-		tF.getAllTasks(function (data){
+	};
+	this.getAllTasks=()=>{
+		tF.getAllTasks((data)=>{
 			_this.tasks = data;
-			for (var i in _this.tasks) {
-				if (_this.tasks[i].shared_user == _this.currentUser._id) {
-					_this.userTasks.push(_this.tasks[i]);
-				}
-			}
+			_this.fetchSharedTasks();
 		});
 	};
-
-	this.createTask = function (){
+	this.createTask=()=>{
 		var task = {
 			user: this.currentUser.name,
 			checked: false,
@@ -49,38 +47,32 @@ app.controller('dashControl', ['$routeParams', '$location', '$cookies', 'userFac
 			description: this.newTask.description,
 			shared_user: this.newTask.shared_user
 		};
-
-		tF.create(task, function (data){
-			console.log(data)
+		tF.create(task, (data)=>{
+			_this.errors = {};
 			if (data.errors) {
-				_this.errors = data.errors;
+				_this.errors = {
+					title: data.errors.description.message,
+					desc: data.errors.title.message
+				};
 			} else {
 				_this.userTasks = data;
 				_this.getAllTasks();
 			}
 		});
 	};
-
-	this.check = function (id){
+	this.check=(id)=>{
 		var change = {
 			id: id,
 			status: this.checked.status
 		};
-
-		console.log(change.status)
-
 		tF.check(change);
 		$location.path('/dashboard');
-	}
-
-	// this.delete = function (){
-	// 	tF.delete();
-	// 	uF.delete();
-	// }
-	// this.delete();
-
-	this.logout = function (){
+	};
+	this.logout=()=>{
 		$cookies.remove('user');
 		$location.path('/login');
-	}
+	};
+	this.getCurrentUser($cookies.get('user'));
+	this.getUsers();
+	this.getTasks($cookies.get('user'));
 }]);

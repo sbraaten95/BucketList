@@ -1,11 +1,8 @@
 app.factory('userFactory', ['$http', function ($http){
 	var users = [];
 	var factory = {};
-
-	factory.login = function (inputUser, callback){
-		console.log(inputUser);
-		$http.post('/users', inputUser).then((data) => {
-			console.log(data)
+	factory.login=(inputUser, callback)=>{
+		$http.post('/users', inputUser).then((data)=>{
 			if (data.data && data.data.errmsg) {
 				callback(data.data);
 			} else {
@@ -14,26 +11,15 @@ app.factory('userFactory', ['$http', function ($http){
 			}
 		});
 	};
-
-	factory.delete = function (){
-		$http.delete('/users').then((data) => {
-			console.log(data);
-		});
-	};
-
-	factory.getUsers = function (callback){
-		$http.get('/users').then((data) => {
+	factory.getUsers=(callback)=>{
+		$http.get('/users').then((data)=>{
 			callback(data.data);
 		});
 	};
-
-	factory.getCurrentUser = function (id, callback){
-		console.log(id)
-		$http.get('/users/' + id).then((data) => {
-			console.log(data);
+	factory.getCurrentUser=(id, callback)=>{
+		$http.get(`/users/${id}`).then((data)=>{
 			callback(data.data);
 		});
 	};
-
 	return factory;	
-}])
+}]);

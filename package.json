@@ -1,7 +1,6 @@
 {
   "name": "MEANBelt",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "^4.14.0",
@@ -15,5 +14,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbraaten95/BucketList.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sbraaten95/BucketList/issues"
+  },
+  "homepage": "https://github.com/sbraaten95/BucketList#readme",
+  "description": ""
 }

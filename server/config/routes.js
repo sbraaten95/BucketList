@@ -9,6 +9,4 @@ module.exports = (app) => {
 	app.get('/tasks/:id', tasks.getUserTasks);
 	app.post('/tasks', tasks.create);
 	app.put('/tasks', tasks.check);
-	app.delete('/users', users.delete);
-	app.delete('/tasks', users.delete);
 };

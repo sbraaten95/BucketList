@@ -11,7 +11,10 @@
 		</select>
 		<input type="submit" value="Add to List">
 	</form>
-	{{dc.errors}}
+	<ul ng-if="dc.errors">
+		<li ng-if="dc.errors.title">{{dc.errors.title}}</li>
+		<li ng-if="dc.errors.desc">{{dc.errors.desc}}</li>
+	</ul>
 	<h3>Before I die I want to...</h3>
 	<ul>
 		<li ng-repeat="task in dc.userTasks">
