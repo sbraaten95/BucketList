@@ -5,7 +5,7 @@
 app.controller('dashControl', ['$location', '$cookies', 'userFactory', 'taskFactory', function ($location, $cookies, uF, tF){
 	var _this = this;
 	this.currentUser = {};
-	this.users = [];
+	$scope.users = [];
 	this.userTasks = [];
 	this.tasks = [];
 	this.errors = {};
@@ -23,7 +23,7 @@ app.controller('dashControl', ['$location', '$cookies', 'userFactory', 'taskFact
 	};
 	this.getUsers=()=>{
 		uF.getUsers((data)=>{
-			_this.users = data;
+			$scope.users = data;
 		});
 	};
 	this.getTasks=(id)=>{
